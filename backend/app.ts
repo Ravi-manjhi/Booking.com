@@ -8,6 +8,8 @@ import userRouter from "./routes/auth.router";
 
 const app = express();
 if (process.env.NODE_ENV === "DEV") {
+  app.use(morgan("short"));
+} else {
   app.use(morgan("dev"));
 }
 

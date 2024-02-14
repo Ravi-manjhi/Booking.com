@@ -1,8 +1,8 @@
 import app from "./app";
 import mongoose from "mongoose";
 
+const PORT = process.env.PORT || 7000;
 const NODE_ENV = process.env.NODE_ENV;
-const PORT = NODE_ENV !== "PRODUCTION" ? process.env.PORT || 3001 : 5000;
 
 const MONGODB_URL = process.env.MONGODB_URL as string;
 const DATABASE = NODE_ENV === "DEV" ? "Booking" : "Test_Booking";
