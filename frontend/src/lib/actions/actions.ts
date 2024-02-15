@@ -1,8 +1,8 @@
 import { IRegisterForm, ISignINForm } from "../types";
 
-const API_BASE_URL = import.meta.env.PROD
-  ? ""
-  : import.meta.env.VITE_API_ENDPOINT;
+const API_BASE_URL = import.meta.env.VITE_API_ENDPOINT
+  ? import.meta.env.VITE_API_ENDPOINT
+  : "";
 
 export const authRegister = async (formData: IRegisterForm) => {
   const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
