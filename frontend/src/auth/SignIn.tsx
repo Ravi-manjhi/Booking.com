@@ -1,7 +1,7 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { ISignINForm } from "../lib/types";
 import { useAuthLogin } from "../lib/hooks/Hooks";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const SignIn = () => {
   const {
@@ -9,16 +9,11 @@ const SignIn = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<ISignINForm>();
-  const navigate = useNavigate();
   const { mutateAsync: signInFn, isPending } = useAuthLogin();
 
   const onSubmit: SubmitHandler<ISignINForm> = (data) => {
     if (!data) return;
-    signInFn(data, {
-      onSuccess: () => {
-        navigate("/");
-      },
-    });
+    signInFn(data);
   };
 
   return (

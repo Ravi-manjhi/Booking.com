@@ -7,6 +7,7 @@ import "dotenv/config";
 
 import userRouter from "./routes/auth.router";
 import myHotelRouter from "./routes/myHotels.router";
+import { staticRender } from "./controllers/static.controller";
 
 const app = express();
 if (process.env.NODE_ENV !== "PRODUCTION") {
@@ -30,5 +31,8 @@ app.use(cookieParser());
 //====================================== routers =========================
 app.use("/api/auth", userRouter);
 app.use("/api/hotel", myHotelRouter);
+
+// ======================== other routes =================================
+app.get("*", staticRender);
 
 export default app;
