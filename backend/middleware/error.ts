@@ -7,7 +7,6 @@ export async function checkError(
   next: NextFunction
 ) {
   const error = validationResult(req);
-
   if (!error.isEmpty()) {
     return res.status(400).json({ status: "failed", message: error.array() });
   }

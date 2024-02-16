@@ -7,28 +7,30 @@ export const createHotels = async (req: Request, res: Response) => {
     const imageFiles = req.files as Express.Multer.File[];
     const newHotel: HotelType = req.body;
 
-    const uploadPromises = imageFiles.map(async (image) => {
-      const b64 = Buffer.from(image.buffer).toString("base64");
-      let dataURI = "data:" + image.mimetype + ".base64" + b64;
-      const response = await cloudinary.uploader.upload(dataURI);
+    const imageUrls = await uploadImages(imageFiles);
 
-      return response.url;
-    });
-
-    const imageURL = await Promise.all(uploadPromises);
-    newHotel.imageUrls = imageURL;
+    newHotel.imageUrls = imageUrls;
     newHotel.lastUpdated = new Date();
     newHotel.userId = req.userId;
 
     const hotel = new HotelModel(newHotel);
-
     await hotel.save();
 
-    res.status(201).json({ status: "OK", hotel });
-  } catch (error) {
-    console.log("Error Creating Hotels", error);
-    return res
-      .status(500)
-      .json({ status: "failed", message: "Internal Server Error" });
+    res.status(201).send(hotel);
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ message: "Something went wrong" });
   }
 };
+
+async function uploadImages(imageFiles: Express.Multer.File[]) {
+  const uploadPromises = imageFiles.map(async (image) => {
+    const b64 = Buffer.from(image.buffer).toString("base64");
+    let dataURI = "data:" + image.mimetype + ";base64," + b64;
+    const res = await cloudinary.uploader.upload(dataURI);
+    return res.url;
+  });
+
+  const imageUrls = await Promise.all(uploadPromises);
+  return imageUrls;
+}

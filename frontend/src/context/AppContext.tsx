@@ -16,7 +16,8 @@ export const AppContextProvider = ({
     setToast(undefined);
   };
 
-  const { isError } = useCheckLoggedIn();
+  const { data, isLoading } = useCheckLoggedIn();
+
   return (
     <AppContext.Provider
       value={{
@@ -24,7 +25,8 @@ export const AppContextProvider = ({
           setToast(ToastMessage);
         },
 
-        isLoggedIn: !isError,
+        isLoggedIn: data?.userId,
+        isLoading: isLoading,
       }}
     >
       {toast && (

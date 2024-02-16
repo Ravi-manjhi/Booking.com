@@ -19,10 +19,26 @@ export type ToastMessage = {
 export type IAppContext = {
   showToast: (ToastMessage: ToastMessage) => void;
   isLoggedIn: boolean;
+  isLoading: boolean;
 };
 
 export type ToastProps = {
   message: string;
   type: "Success" | "Error";
   onClose: () => void;
+};
+
+export type HotelFormData = {
+  name: string;
+  city: string;
+  country: string;
+  description: string;
+  type: string;
+  pricePerNight: number;
+  starRating: number;
+  facilities: string[];
+  imageFiles: FileList;
+  imageUrls: string[];
+  adultCount: number;
+  childCount: number;
 };
