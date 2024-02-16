@@ -1,19 +1,19 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../../context/AppContext";
 import React, { useEffect } from "react";
 
-const IsSignIn = ({ children }: { children: React.ReactNode }) => {
+const IsSignInRouter = ({ children }: { children: React.ReactNode }) => {
   const { isLoggedIn, isLoading } = useGlobalContext();
-  const { pathname } = useLocation();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   useEffect(() => {
     if (!isLoading) {
-      if (!isLoggedIn && pathname === "/sign-in") {
-        navigate("/sign-in");
+      if (isLoggedIn && pathname === "/sign-in") {
+        navigate("/");
       }
-      if (!isLoggedIn && pathname === "/sign-up") {
-        navigate("/sign-up");
+      if (isLoggedIn && pathname === "/sign-up") {
+        navigate("/");
       }
     }
   }, [isLoading, isLoggedIn, navigate, pathname]);
@@ -25,9 +25,7 @@ const IsSignIn = ({ children }: { children: React.ReactNode }) => {
       </div>
     );
 
-  if (isLoggedIn && !isLoading) return navigate("/");
-
   return children;
 };
 
-export default IsSignIn;
+export default IsSignInRouter;
