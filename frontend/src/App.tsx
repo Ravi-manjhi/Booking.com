@@ -7,7 +7,7 @@ import SignIn from "./auth/SignIn";
 import SignUp from "./auth/SignUp";
 import AddHotel from "./pages/AddHotel";
 import ProtectedRoute from "./components/protected/ProtectedRoute";
-import IsSignIn from "./components/protected/IsSignInRouter";
+import IsSignInRouter from "./components/protected/IsSignInRouter";
 
 function App() {
   return (
@@ -20,9 +20,9 @@ function App() {
 
         <Route
           element={
-            <IsSignIn>
+            <IsSignInRouter>
               <AuthLayout />
-            </IsSignIn>
+            </IsSignInRouter>
           }
         >
           <Route path="sign-in" element={<SignIn />} />
