@@ -11,12 +11,15 @@ export type IUserType = {
   lastName: string;
 };
 
-const UserSchema = new mongoose.Schema({
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  firstName: { type: String, required: true },
-  lastName: { type: String },
-});
+const UserSchema = new mongoose.Schema<IUserType>(
+  {
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    firstName: { type: String, required: true },
+    lastName: { type: String },
+  },
+  { timestamps: true }
+);
 
 UserSchema.pre("save", async function (next) {
   if (this.isModified("password")) {
