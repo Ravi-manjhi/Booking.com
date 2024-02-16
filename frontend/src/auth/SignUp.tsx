@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { IRegisterForm } from "../lib/types";
-import { useAuthRegister } from "../lib/hooks/Hooks";
+import { useAuthRegister } from "../lib/queryHooks/auth.hooks";
 import { Link, useNavigate } from "react-router-dom";
 
 const SignUp = () => {

@@ -5,6 +5,7 @@ import FacilitiesSection from "./FacilitiesSection";
 import GuestsSection from "./GuestsSection";
 import ImagesSections from "./ImagesSections";
 import { HotelFormData } from "../../lib/types";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   onSave: (hotelFormData: FormData) => void;
@@ -12,8 +13,9 @@ type Props = {
 };
 
 const ManageHotelForm = ({ onSave, isLoading }: Props) => {
+  const navigate = useNavigate();
   const formMethods = useForm<HotelFormData>();
-  const { handleSubmit } = formMethods;
+  const { handleSubmit, reset } = formMethods;
 
   const onSubmit = handleSubmit((formDataJson: HotelFormData) => {
     const formData = new FormData();
@@ -52,13 +54,31 @@ const ManageHotelForm = ({ onSave, isLoading }: Props) => {
         <FacilitiesSection />
         <GuestsSection />
         <ImagesSections />
-        <span className="flex justify-end">
+        <span className="flex items-center justify-between">
+          <div className="flex gap-4">
+            <button
+              disabled={isLoading}
+              type="submit"
+              className="bg-blue-600 text-white py-2 px-4 rounded font-bold hover:bg-blue-500 text-xl disabled:bg-gray-500"
+            >
+              {isLoading ? "Saving..." : "Save"}
+            </button>
+
+            <button
+              onClick={() => reset()}
+              type="reset"
+              className="bg-blue-600 text-white py-2 px-4 rounded font-bold hover:bg-blue-500 text-xl disabled:bg-gray-500"
+            >
+              Reset
+            </button>
+          </div>
+
           <button
-            disabled={isLoading}
-            type="submit"
-            className="bg-blue-600 text-white p-2 font-bold hover:bg-blue-500 text-xl disabled:bg-gray-500"
+            onClick={() => navigate(-1)}
+            type="button"
+            className="bg-blue-600 text-white py-2 px-4 rounded font-bold hover:bg-blue-500 text-xl disabled:bg-gray-500"
           >
-            {isLoading ? "Saving..." : "Save"}
+            Back
           </button>
         </span>
       </form>

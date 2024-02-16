@@ -1,6 +1,6 @@
 import react, { createContext, useContext, useState } from "react";
 import { IAppContext, ToastMessage } from "../lib/types";
-import { useCheckLoggedIn } from "../lib/hooks/Hooks";
+import { useCheckLoggedIn } from "../lib/queryHooks/auth.hooks";
 import Toast from "../components/ui/Toast";
 
 const AppContext = createContext<IAppContext | undefined>(undefined);

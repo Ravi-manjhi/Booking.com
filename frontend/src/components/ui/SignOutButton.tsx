@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useAuthSignOut } from "../../lib/hooks/Hooks";
+import { useAuthSignOut } from "../../lib/queryHooks/auth.hooks";
 
 const SignOutButton = () => {
   const navigate = useNavigate();

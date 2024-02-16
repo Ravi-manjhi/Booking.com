@@ -1,6 +1,6 @@
 import { IRegisterForm, ISignINForm } from "../types";
 
-const API_BASE_URL = import.meta.env.VITE_API_ENDPOINT
+export const API_BASE_URL = import.meta.env.VITE_API_ENDPOINT
   ? import.meta.env.VITE_API_ENDPOINT
   : "";
 
@@ -54,18 +54,4 @@ export const authSignOut = async () => {
 
   const body = await response.json();
   if (!response.ok) throw new Error(body.message);
-};
-
-export const addMyHotel = async (hotelFormData: FormData) => {
-  const response = await fetch(`${API_BASE_URL}/api/hotel/create`, {
-    method: "POST",
-    credentials: "include",
-    body: hotelFormData,
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to add hotel");
-  }
-
-  return response.json();
 };

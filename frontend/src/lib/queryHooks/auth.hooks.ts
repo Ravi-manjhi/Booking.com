@@ -1,12 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { IRegisterForm, ISignINForm } from "../types";
 import {
-  addMyHotel,
   authRegister,
   authSignIn,
   authSignOut,
   validateToken,
-} from "../actions/actions";
+} from "../actions/auth.actions";
 import { useGlobalContext } from "../../context/AppContext";
 import { useNavigate } from "react-router-dom";
 
@@ -59,19 +58,5 @@ export const useAuthSignOut = () => {
       navigate(0);
     },
     onError: (error) => showToast({ message: error.message, type: "Error" }),
-  });
-};
-
-export const useAddMyHotel = () => {
-  const { showToast } = useGlobalContext();
-
-  return useMutation({
-    mutationFn: (data: FormData) => addMyHotel(data),
-    onSuccess: () => {
-      showToast({ message: "Hotel Saved!", type: "Success" });
-    },
-    onError: () => {
-      showToast({ message: "Error Saving Hotel", type: "Error" });
-    },
   });
 };

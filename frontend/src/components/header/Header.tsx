@@ -14,13 +14,13 @@ function Header() {
           {isLoggedIn ? (
             <>
               <Link
-                className="flex items-center bg-blue-600 rounded-md text-white px-3 font-bold hover:bg-blue-200 hover:text-gray-400"
+                className="flex items-center rounded-md text-white px-3 font-bold hover:bg-white hover:text-blue-600"
                 to="/my-bookings"
               >
                 My Booking
               </Link>
               <Link
-                className="flex items-center  bg-blue-600 rounded-md text-white px-3 font-bold hover:bg-blue-200  hover:text-gray-400"
+                className="flex items-center  rounded-md text-white px-3 font-bold hover:bg-white  hover:text-blue-600"
                 to="/my-hotels"
               >
                 My Hotels

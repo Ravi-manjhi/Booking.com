@@ -29,6 +29,7 @@ export type ToastProps = {
 };
 
 export type HotelFormData = {
+  _id: string | undefined;
   name: string;
   city: string;
   country: string;

@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../../context/AppContext";
 import React, { useEffect } from "react";
+import Loading from "../ui/Loading";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isLoggedIn, isLoading } = useGlobalContext();
@@ -12,12 +13,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     }
   }, [isLoading, isLoggedIn, navigate]);
 
-  if (isLoading)
-    return (
-      <div className="flex bg-white text-gray-500 h-dvh items-center justify-center">
-        <h3 className="text-bold">Loading...</h3>
-      </div>
-    );
+  if (isLoading) return <Loading />;
 
   return children;
 };
