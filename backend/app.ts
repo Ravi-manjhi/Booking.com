@@ -9,7 +9,7 @@ import userRouter from "./routes/auth.router";
 import myHotelRouter from "./routes/myHotels.router";
 
 const app = express();
-if (process.env.NODE_ENV === "DEV") {
+if (process.env.NODE_ENV !== "PRODUCTION") {
   app.use(morgan("dev"));
   app.use(
     cors({
