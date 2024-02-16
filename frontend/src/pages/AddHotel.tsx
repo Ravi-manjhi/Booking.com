@@ -1,5 +1,5 @@
 import ManageHotelForm from "../components/hotelForm/ManageHotelForm";
-import { useAddMyHotel } from "../lib/hooks/Hooks";
+import { useAddMyHotel } from "../lib/queryHooks/myHotel.hooks";
 
 const AddHotel = () => {
   const { mutate, isPending } = useAddMyHotel();

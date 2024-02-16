@@ -8,6 +8,7 @@ import SignUp from "./auth/SignUp";
 import AddHotel from "./pages/AddHotel";
 import ProtectedRoute from "./components/protected/ProtectedRoute";
 import IsSignInRouter from "./components/protected/IsSignInRouter";
+import MyHotel from "./pages/MyHotel";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           }
         >
           <Route path="/add-hotel" element={<AddHotel />} />
+          <Route path="/my-hotels" element={<MyHotel />} />
         </Route>
       </Routes>
     </>

@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { ISignINForm } from "../lib/types";
-import { useAuthLogin } from "../lib/hooks/Hooks";
+import { useAuthLogin } from "../lib/queryHooks/auth.hooks";
 import { Link } from "react-router-dom";
 
 const SignIn = () => {
