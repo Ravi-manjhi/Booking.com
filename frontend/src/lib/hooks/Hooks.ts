@@ -33,6 +33,7 @@ export const useCheckLoggedIn = () => {
 };
 
 export const useAuthLogin = () => {
+  const navigate = useNavigate();
   const { showToast } = useGlobalContext();
   const queryClient = useQueryClient();
   return useMutation({
@@ -40,6 +41,7 @@ export const useAuthLogin = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["validateAuth"] });
       showToast({ message: "Login Success", type: "Success" });
+      navigate(-1);
     },
     onError: (error) => showToast({ message: error.message, type: "Error" }),
   });
