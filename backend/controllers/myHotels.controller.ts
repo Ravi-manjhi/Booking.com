@@ -40,11 +40,53 @@ export const getMyHotelCtrl = async (req: Request, res: Response) => {
 
     const hotels = await HotelModel.find({ userId }).sort({ lastUpdated: -1 });
     if (!hotels) {
-      return res.status(400).json({ message: "Bad Request" });
+      return res.status(404).json({ message: "Not found" });
     }
 
     res.status(200).json(hotels);
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+export const getMyHotelById = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    const hotel = await HotelModel.findById(id);
+
+    if (!hotel) {
+      return res.status(400).json({ message: "bad Request" });
+    }
+
+    res.status(200).json(hotel);
+  } catch (error) {
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+export const updatedHotel = async (req: Request, res: Response) => {
+  try {
+    const updateHotel: HotelType = req.body;
+    updateHotel.lastUpdated = new Date();
+
+    const hotel = await HotelModel.findOneAndUpdate(
+      { _id: req.params.id, userId: req.userId },
+      updateHotel
+    );
+
+    if (!hotel) {
+      return res.status(404).json({ message: "bad Request" });
+    }
+
+    const files = req.files as Express.Multer.File[];
+    const imageUrls = await uploadImages(files);
+
+    hotel.imageUrls = [...imageUrls, ...(updateHotel.imageUrls || [])];
+
+    await hotel.save();
+
+    res.status(200).json({ message: "Update Hotel details", hotel });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 };

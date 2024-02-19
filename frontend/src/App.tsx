@@ -9,6 +9,7 @@ import AddHotel from "./pages/AddHotel";
 import ProtectedRoute from "./components/protected/ProtectedRoute";
 import IsSignInRouter from "./components/protected/IsSignInRouter";
 import MyHotel from "./pages/MyHotel";
+import EditHotel from "./pages/EditHotel";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
         >
           <Route path="/add-hotel" element={<AddHotel />} />
           <Route path="/my-hotels" element={<MyHotel />} />
+          <Route path="/edit-hotel/:id" element={<EditHotel />} />
         </Route>
       </Routes>
     </>

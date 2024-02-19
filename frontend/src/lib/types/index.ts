@@ -29,7 +29,7 @@ export type ToastProps = {
 };
 
 export type HotelFormData = {
-  _id: string | undefined;
+  _id?: string | undefined;
   name: string;
   city: string;
   country: string;
@@ -39,7 +39,7 @@ export type HotelFormData = {
   starRating: number;
   facilities: string[];
   imageFiles: FileList;
-  imageUrls: string[];
+  imageUrls?: string[];
   adultCount: number;
   childCount: number;
 };

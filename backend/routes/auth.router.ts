@@ -36,7 +36,6 @@ router.post(
 );
 
 router.get("/validate-token", verifyToken, validateTokenCtrl);
-
 router.get("/sign-out", signOutCtrl);
 
 export default router;
