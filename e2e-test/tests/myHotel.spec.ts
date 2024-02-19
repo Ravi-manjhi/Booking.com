@@ -1,21 +1,21 @@
 import { test, expect } from "@playwright/test";
 import path from "path";
 
-const UI_URL = "http://localhost:5173/";
+const UI_URL = "http://localhost:5174/";
 
 test.beforeEach(async ({ page }) => {
   await page.goto(UI_URL);
 
-  await page.getByRole("link", { name: "Sign-In" }).click();
+  await page.getByRole("link", { name: "Sign In" }).click();
 
-  await expect(page.getByRole("heading", { name: "Login" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Sign In" })).toBeVisible();
 
-  await page.locator("[name=email]").fill("ravi.manjhi19901@gmail.com");
+  await page.locator("[name=email]").fill("ravi.manjhi199@gmail.com");
   await page.locator("[name=password]").fill("Test@123");
 
-  await page.getByRole("button", { name: "Sign In" }).click();
+  await page.getByRole("button", { name: "Login" }).click();
 
-  await expect(page.getByText("Login Success")).toBeVisible();
+  await expect(page.getByText("Sign in Successful!")).toBeVisible();
 });
 
 test("should allow user to add a hotel", async ({ page }) => {
@@ -39,47 +39,47 @@ test("should allow user to add a hotel", async ({ page }) => {
   await page.locator('[name="childCount"]').fill("4");
 
   await page.setInputFiles('[name="imageFiles"]', [
-    path.join(__dirname, "files", "wallpaper (7).png"),
-    path.join(__dirname, "files", "wallpaper (8).png"),
+    path.join(__dirname, "files", "1.png"),
+    path.join(__dirname, "files", "2.png"),
   ]);
 
   await page.getByRole("button", { name: "Save" }).click();
   await expect(page.getByText("Hotel Saved!")).toBeVisible();
 });
 
-// test("should display hotels", async ({ page }) => {
-//   await page.goto(`${UI_URL}my-hotels`);
+test("should display hotels", async ({ page }) => {
+  await page.goto(`${UI_URL}my-hotels`);
 
-//   await expect(page.getByText("Dublin Getaways")).toBeVisible();
-//   await expect(page.getByText("Lorem ipsum dolor sit amet")).toBeVisible();
-//   await expect(page.getByText("Dublin, Ireland")).toBeVisible();
-//   await expect(page.getByText("All Inclusive")).toBeVisible();
-//   await expect(page.getByText("£119 per night")).toBeVisible();
-//   await expect(page.getByText("2 adults, 3 children")).toBeVisible();
-//   await expect(page.getByText("2 Star Rating")).toBeVisible();
+  await expect(page.getByText("Dublin Getaways")).toBeVisible();
+  await expect(page.getByText("Lorem ipsum dolor sit amet")).toBeVisible();
+  await expect(page.getByText("Dublin, Ireland")).toBeVisible();
+  await expect(page.getByText("All Inclusive")).toBeVisible();
+  await expect(page.getByText("£119 per night")).toBeVisible();
+  await expect(page.getByText("2 adults, 3 children")).toBeVisible();
+  await expect(page.getByText("2 Star Rating")).toBeVisible();
 
-//   await expect(
-//     page.getByRole("link", { name: "View Details" }).first()
-//   ).toBeVisible();
-//   await expect(page.getByRole("link", { name: "Add Hotel" })).toBeVisible();
-// });
+  await expect(
+    page.getByRole("link", { name: "View Details" }).first()
+  ).toBeVisible();
+  await expect(page.getByRole("link", { name: "Add Hotel" })).toBeVisible();
+});
 
-// test("should edit hotel", async ({ page }) => {
-//   await page.goto(`${UI_URL}my-hotels`);
+test("should edit hotel", async ({ page }) => {
+  await page.goto(`${UI_URL}my-hotels`);
 
-//   await page.getByRole("link", { name: "View Details" }).first().click();
+  await page.getByRole("link", { name: "View Details" }).first().click();
 
-//   await page.waitForSelector('[name="name"]', { state: "attached" });
-//   await expect(page.locator('[name="name"]')).toHaveValue("Dublin Getaways");
-//   await page.locator('[name="name"]').fill("Dublin Getaways UPDATED");
-//   await page.getByRole("button", { name: "Save" }).click();
-//   await expect(page.getByText("Hotel Saved!")).toBeVisible();
+  await page.waitForSelector('[name="name"]', { state: "attached" });
+  await expect(page.locator('[name="name"]')).toHaveValue("Dublin Getaways");
+  await page.locator('[name="name"]').fill("Dublin Getaways UPDATED");
+  await page.getByRole("button", { name: "Save" }).click();
+  await expect(page.getByText("Hotel Saved!")).toBeVisible();
 
-//   await page.reload();
+  await page.reload();
 
-//   await expect(page.locator('[name="name"]')).toHaveValue(
-//     "Dublin Getaways UPDATED"
-//   );
-//   await page.locator('[name="name"]').fill("Dublin Getaways");
-//   await page.getByRole("button", { name: "Save" }).click();
-// });
+  await expect(page.locator('[name="name"]')).toHaveValue(
+    "Dublin Getaways UPDATED"
+  );
+  await page.locator('[name="name"]').fill("Dublin Getaways");
+  await page.getByRole("button", { name: "Save" }).click();
+});

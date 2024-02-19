@@ -6,19 +6,26 @@ import GuestsSection from "./GuestsSection";
 import ImagesSections from "./ImagesSections";
 import { HotelFormData } from "../../lib/types";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 type Props = {
+  hotel?: HotelFormData;
   onSave: (hotelFormData: FormData) => void;
   isLoading: boolean;
 };
 
-const ManageHotelForm = ({ onSave, isLoading }: Props) => {
+const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
   const navigate = useNavigate();
   const formMethods = useForm<HotelFormData>();
   const { handleSubmit, reset } = formMethods;
 
+  useEffect(() => {
+    reset(hotel);
+  }, [hotel, reset]);
+
   const onSubmit = handleSubmit((formDataJson: HotelFormData) => {
     const formData = new FormData();
+
     formData.append("name", formDataJson.name);
     formData.append("city", formDataJson.city);
     formData.append("country", formDataJson.country);
@@ -33,11 +40,11 @@ const ManageHotelForm = ({ onSave, isLoading }: Props) => {
       formData.append(`facilities[${index}]`, facility);
     });
 
-    // if (formDataJson.imageUrls) {
-    //   formDataJson.imageUrls.forEach((url, index) => {
-    //     formData.append(`imageUrls[${index}]`, url);
-    //   });
-    // }
+    if (formDataJson.imageUrls) {
+      formDataJson.imageUrls.forEach((url, index) => {
+        formData.append(`imageUrls[${index}]`, url);
+      });
+    }
 
     Array.from(formDataJson.imageFiles).forEach((imageFile) => {
       formData.append(`imageFiles`, imageFile);
@@ -55,7 +62,7 @@ const ManageHotelForm = ({ onSave, isLoading }: Props) => {
         <GuestsSection />
         <ImagesSections />
         <span className="flex items-center justify-between">
-          <div className="flex gap-4">
+          <div className="flex gap-4 ">
             <button
               disabled={isLoading}
               type="submit"
