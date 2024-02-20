@@ -1,7 +1,7 @@
-import { ToastProps } from "../../lib/types";
+import { IToastProps } from "../../lib/types";
 import { useEffect } from "react";
 
-const Toast = ({ message, type, onClose }: ToastProps) => {
+const Toast = ({ message, type, onClose }: IToastProps) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose();

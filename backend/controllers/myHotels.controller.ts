@@ -1,18 +1,6 @@
-import { v2 as cloudinary } from "cloudinary";
 import { Request, Response } from "express";
 import HotelModel, { HotelType } from "../model/hotel.model";
-
-async function uploadImages(imageFiles: Express.Multer.File[]) {
-  const uploadPromises = imageFiles.map(async (image) => {
-    const b64 = Buffer.from(image.buffer).toString("base64");
-    let dataURI = "data:" + image.mimetype + ";base64," + b64;
-    const res = await cloudinary.uploader.upload(dataURI);
-    return res.url;
-  });
-
-  const imageUrls = await Promise.all(uploadPromises);
-  return imageUrls;
-}
+import { uploadImages } from "../utils/helper";
 
 export const createHotels = async (req: Request, res: Response) => {
   try {
@@ -38,12 +26,34 @@ export const getMyHotelCtrl = async (req: Request, res: Response) => {
   try {
     const userId = req.userId;
 
-    const hotels = await HotelModel.find({ userId }).sort({ lastUpdated: -1 });
+    const limit = 5;
+    const pageNumber = parseInt(
+      req.query.page ? req.query.page.toString() : "1"
+    );
+    const skip = (pageNumber - 1) * limit;
+    const sort = req.query.sort ? (req.query.sort as string) : "-lastUpdated";
+
+    const hotels = await HotelModel.find({ userId })
+      .skip(skip)
+      .limit(limit)
+      .sort(sort);
+
+    const total = await HotelModel.countDocuments();
+
     if (!hotels) {
       return res.status(404).json({ message: "Not found" });
     }
 
-    res.status(200).json(hotels);
+    const response = {
+      data: hotels,
+      pagination: {
+        total,
+        page: pageNumber,
+        pages: Math.ceil(total / limit),
+      },
+    };
+
+    res.status(200).json(response);
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
   }
@@ -52,6 +62,7 @@ export const getMyHotelCtrl = async (req: Request, res: Response) => {
 export const getMyHotelById = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
+
     const hotel = await HotelModel.findById(id);
 
     if (!hotel) {

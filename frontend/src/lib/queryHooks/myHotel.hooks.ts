@@ -26,10 +26,10 @@ export const useAddMyHotel = () => {
   });
 };
 
-export const useGetMyHotel = () => {
+export const useGetMyHotel = (page: number) => {
   return useQuery({
-    queryKey: ["myHotels"],
-    queryFn: getMyHotel,
+    queryKey: ["myHotels", page],
+    queryFn: () => getMyHotel(page),
   });
 };
 

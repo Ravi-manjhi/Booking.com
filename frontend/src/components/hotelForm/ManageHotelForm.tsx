@@ -4,26 +4,26 @@ import TypeSection from "./TypeSection";
 import FacilitiesSection from "./FacilitiesSection";
 import GuestsSection from "./GuestsSection";
 import ImagesSections from "./ImagesSections";
-import { HotelFormData } from "../../lib/types";
+import { IHotelFormData } from "../../lib/types";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 type Props = {
-  hotel?: HotelFormData;
+  hotel?: IHotelFormData;
   onSave: (hotelFormData: FormData) => void;
   isLoading: boolean;
 };
 
 const ManageHotelForm = ({ onSave, isLoading, hotel }: Props) => {
   const navigate = useNavigate();
-  const formMethods = useForm<HotelFormData>();
+  const formMethods = useForm<IHotelFormData>();
   const { handleSubmit, reset } = formMethods;
 
   useEffect(() => {
     reset(hotel);
   }, [hotel, reset]);
 
-  const onSubmit = handleSubmit((formDataJson: HotelFormData) => {
+  const onSubmit = handleSubmit((formDataJson: IHotelFormData) => {
     const formData = new FormData();
 
     formData.append("name", formDataJson.name);

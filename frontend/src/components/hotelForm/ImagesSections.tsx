@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { HotelFormData } from "../../lib/types";
+import { IHotelFormData } from "../../lib/types";
 
 const ImagesSections = () => {
   const {
@@ -7,7 +7,7 @@ const ImagesSections = () => {
     formState: { errors },
     watch,
     setValue,
-  } = useFormContext<HotelFormData>();
+  } = useFormContext<IHotelFormData>();
   const existingImageUrls = watch("imageUrls");
 
   const handleDeleteButton = (imageUrl: string) => {

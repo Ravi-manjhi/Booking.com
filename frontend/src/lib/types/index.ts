@@ -11,25 +11,25 @@ export type ISignINForm = {
   password: string;
 };
 
-export type ToastMessage = {
+export type IToastMessage = {
   message: string;
   type: "Success" | "Error";
 };
 
 export type IAppContext = {
-  showToast: (ToastMessage: ToastMessage) => void;
+  showToast: (ToastMessage: IToastMessage) => void;
   isLoggedIn: boolean;
   isLoading: boolean;
 };
 
-export type ToastProps = {
+export type IToastProps = {
   message: string;
   type: "Success" | "Error";
   onClose: () => void;
 };
 
-export type HotelFormData = {
-  _id?: string | undefined;
+export type IHotelFormData = {
+  _id?: string;
   name: string;
   city: string;
   country: string;
@@ -42,4 +42,54 @@ export type HotelFormData = {
   imageUrls?: string[];
   adultCount: number;
   childCount: number;
+};
+
+export type IHotelSearchResponse = {
+  data: IHotelFormData[];
+  pagination: {
+    total: number;
+    page: number;
+    pages: number;
+  };
+};
+
+export type ISearchContext = {
+  hotelId: string;
+  destination: string;
+  checkIn: Date;
+  checkOut: Date;
+  adultCount: number;
+  childCount: number;
+  saveSearchValue: (
+    destination: string,
+    checkIn: Date,
+    checkOut: Date,
+    adultCount: number,
+    childCount: number
+  ) => void;
+};
+
+export type ISearchParams = {
+  destination?: string;
+  checkIn?: string;
+  checkOut?: string;
+  adultCount?: string;
+  childCount?: string;
+  page?: string;
+  facilities?: string[];
+  types?: string[];
+  stars?: string[];
+  maxPrice?: number | undefined;
+  sortOptions?: string;
+};
+
+export type PaginationProps = {
+  page: number;
+  pages: number;
+  onPageChange: (page: number) => void;
+};
+
+export type StarRatingProps = {
+  selectedStar: string[];
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };

@@ -1,4 +1,4 @@
-export const hotelTypes = [
+export const HotelTypes = [
   "Budget",
   "Boutique",
   "Luxury",
@@ -16,7 +16,7 @@ export const hotelTypes = [
   "Self Catering",
 ];
 
-export const hotelFacilities = [
+export const HotelFacilities = [
   "Free WiFi",
   "Parking",
   "Airport Shuttle",

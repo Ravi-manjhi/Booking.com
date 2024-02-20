@@ -1,18 +1,18 @@
-import { hotelFacilities } from "../../lib/hotel-option-config";
+import { HotelFacilities } from "../../lib/hotel-option-config";
 import { useFormContext } from "react-hook-form";
-import { HotelFormData } from "../../lib/types";
+import { IHotelFormData } from "../../lib/types";
 
 const FacilitiesSection = () => {
   const {
     register,
     formState: { errors },
-  } = useFormContext<HotelFormData>();
+  } = useFormContext<IHotelFormData>();
 
   return (
     <div>
       <h2 className="text-2xl font-bold mb-3">Facilities</h2>
       <div className="grid grid-cols-5 gap-3">
-        {hotelFacilities.map((facility) => (
+        {HotelFacilities.map((facility) => (
           <label key={facility} className="text-sm flex gap-1 text-gray-700">
             <input
               type="checkbox"
