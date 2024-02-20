@@ -1,5 +1,5 @@
 import react, { createContext, useContext, useState } from "react";
-import { IAppContext, ToastMessage } from "../lib/types";
+import { IAppContext, IToastMessage } from "../lib/types";
 import { useCheckLoggedIn } from "../lib/queryHooks/auth.hooks";
 import Toast from "../components/ui/Toast";
 
@@ -10,7 +10,7 @@ export const AppContextProvider = ({
 }: {
   children: react.ReactNode;
 }) => {
-  const [toast, setToast] = useState<ToastMessage | undefined>(undefined);
+  const [toast, setToast] = useState<IToastMessage | undefined>(undefined);
 
   const onClose = () => {
     setToast(undefined);

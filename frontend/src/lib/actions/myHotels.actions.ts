@@ -12,8 +12,12 @@ export const addMyHotel = async (hotelFormData: FormData) => {
   return response.json();
 };
 
-export const getMyHotel = async () => {
-  const response = await fetch(`${API_BASE_URL}/api/hotel`, {
+export const getMyHotel = async (page: number) => {
+  const queryParams = new URLSearchParams();
+
+  queryParams.append("page", page);
+
+  const response = await fetch(`${API_BASE_URL}/api/hotel?${queryParams}`, {
     credentials: "include",
   });
 

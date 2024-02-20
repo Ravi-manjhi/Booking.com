@@ -1,12 +1,16 @@
 import { Link } from "react-router-dom";
 import Loading from "../components/ui/Loading";
 import { useGetMyHotel } from "../lib/queryHooks/myHotel.hooks";
-import { HotelFormData } from "../lib/types";
+import { IHotelFormData } from "../lib/types";
 import { BsBuilding, BsMap } from "react-icons/bs";
 import { BiHotel, BiMoney, BiStar } from "react-icons/bi";
+import Pagination from "../components/ui/Pagination";
+import { useState } from "react";
 
 const MyHotel = () => {
-  const { data: hotelData, isLoading } = useGetMyHotel();
+  const [page, setPage] = useState<number>(1);
+
+  const { data: hotelData, isLoading } = useGetMyHotel(page);
 
   if (isLoading) return <Loading />;
 
@@ -21,7 +25,7 @@ const MyHotel = () => {
           Add Hotel
         </Link>
       </div>
-      {hotelData?.length === 0 ? (
+      {hotelData?.data.length === 0 ? (
         <div className="flex items-center flex-col w-full h-96 justify-center">
           <span className="underline font-semibold text-gray-600">
             No Hotels found...
@@ -31,9 +35,9 @@ const MyHotel = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-8">
-          {hotelData.map((hotel: HotelFormData) => (
+          {hotelData?.data.map((hotel: IHotelFormData) => (
             <div
-              key={hotel?.name}
+              key={hotel?._id}
               data-testid="hotel-card"
               className="flex flex-col justify-between border border-slate-300 rounded-lg p-8 gap-5"
             >
@@ -70,7 +74,6 @@ const MyHotel = () => {
 
                 <Link
                   to={`/edit-hotel/${hotel._id}`}
-                  target="_blank"
                   className="flex bg-red-600 rounded text-white text-sm font-bold px-10 py-4 hover:bg-red-500"
                 >
                   Edit
@@ -84,6 +87,12 @@ const MyHotel = () => {
           ))}
         </div>
       )}
+
+      <Pagination
+        page={hotelData?.pagination.page}
+        pages={hotelData?.pagination?.pages}
+        onPageChange={setPage}
+      />
     </div>
   );
 };
