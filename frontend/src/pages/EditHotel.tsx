@@ -1,29 +1,36 @@
+import { useMutation, useQuery } from "react-query";
 import { useParams } from "react-router-dom";
-import {
-  useGetHotelById,
-  useUpdateHotelById,
-} from "../lib/queryHooks/myHotel.hooks";
-import Loading from "../components/ui/Loading";
-import ManageHotelForm from "../components/hotelForm/ManageHotelForm";
+import * as apiClient from "../api-client";
+import ManageHotelForm from "../forms/ManageHotelForm/ManageHotelForm";
+import { useAppContext } from "../contexts/AppContext";
 
 const EditHotel = () => {
-  const param = useParams();
-  const id = param.id as string;
+  const { hotelId } = useParams();
+  const { showToast } = useAppContext();
 
-  const { data, isLoading } = useGetHotelById(id);
-  const { mutateAsync, isPending } = useUpdateHotelById();
+  const { data: hotel } = useQuery(
+    "fetchMyHotelById",
+    () => apiClient.fetchMyHotelById(hotelId || ""),
+    {
+      enabled: !!hotelId,
+    }
+  );
 
-  const handleSave = (formData: FormData) => {
-    mutateAsync({ id, formData });
+  const { mutate, isLoading } = useMutation(apiClient.updateMyHotelById, {
+    onSuccess: () => {
+      showToast({ message: "Hotel Saved!", type: "SUCCESS" });
+    },
+    onError: () => {
+      showToast({ message: "Error Saving Hotel", type: "ERROR" });
+    },
+  });
+
+  const handleSave = (hotelFormData: FormData) => {
+    mutate(hotelFormData);
   };
 
-  if (isLoading) return <Loading />;
   return (
-    <ManageHotelForm
-      onSave={handleSave}
-      isLoading={isLoading || isPending}
-      hotel={data}
-    />
+    <ManageHotelForm hotel={hotel} onSave={handleSave} isLoading={isLoading} />
   );
 };
 

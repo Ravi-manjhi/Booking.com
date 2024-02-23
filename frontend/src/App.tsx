@@ -1,51 +1,117 @@
-import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Search from "./pages/Search";
-import RootLayout from "./pages/RootLayout";
-import AuthLayout from "./auth/AuthLayout";
-import SignIn from "./auth/SignIn";
-import SignUp from "./auth/SignUp";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import Layout from "./layouts/Layout";
+import Register from "./pages/Register";
+import SignIn from "./pages/SignIn";
 import AddHotel from "./pages/AddHotel";
-import ProtectedRoute from "./components/protected/ProtectedRoute";
-import IsSignInRouter from "./components/protected/IsSignInRouter";
-import MyHotel from "./pages/MyHotel";
+import { useAppContext } from "./contexts/AppContext";
+import MyHotels from "./pages/MyHotels";
 import EditHotel from "./pages/EditHotel";
+import Search from "./pages/Search";
+import Detail from "./pages/Detail";
+import Booking from "./pages/Booking";
+import MyBookings from "./pages/MyBookings";
+import Home from "./pages/Home";
 
-function App() {
+const App = () => {
+  const { isLoggedIn } = useAppContext();
   return (
-    <>
+    <Router>
       <Routes>
-        <Route element={<RootLayout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/search" element={<Search />} />
-        </Route>
-
         <Route
+          path="/"
           element={
-            <IsSignInRouter>
-              <AuthLayout />
-            </IsSignInRouter>
+            <Layout>
+              <Home />
+            </Layout>
           }
-        >
-          <Route path="sign-in" element={<SignIn />} />
-          <Route path="sign-up" element={<SignUp />} />
-        </Route>
-
-        {/* protected route */}
+        />
         <Route
+          path="/search"
           element={
-            <ProtectedRoute>
-              <AuthLayout />
-            </ProtectedRoute>
+            <Layout>
+              <Search />
+            </Layout>
           }
-        >
-          <Route path="/add-hotel" element={<AddHotel />} />
-          <Route path="/my-hotels" element={<MyHotel />} />
-          <Route path="/edit-hotel/:id" element={<EditHotel />} />
-        </Route>
+        />
+        <Route
+          path="/detail/:hotelId"
+          element={
+            <Layout>
+              <Detail />
+            </Layout>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <Layout>
+              <Register />
+            </Layout>
+          }
+        />
+        <Route
+          path="/sign-in"
+          element={
+            <Layout>
+              <SignIn />
+            </Layout>
+          }
+        />
+
+        {isLoggedIn && (
+          <>
+            <Route
+              path="/hotel/:hotelId/booking"
+              element={
+                <Layout>
+                  <Booking />
+                </Layout>
+              }
+            />
+
+            <Route
+              path="/add-hotel"
+              element={
+                <Layout>
+                  <AddHotel />
+                </Layout>
+              }
+            />
+            <Route
+              path="/edit-hotel/:hotelId"
+              element={
+                <Layout>
+                  <EditHotel />
+                </Layout>
+              }
+            />
+            <Route
+              path="/my-hotels"
+              element={
+                <Layout>
+                  <MyHotels />
+                </Layout>
+              }
+            />
+            <Route
+              path="/my-bookings"
+              element={
+                <Layout>
+                  <MyBookings />
+                </Layout>
+              }
+            />
+          </>
+        )}
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
-    </>
+    </Router>
   );
-}
+};
 
 export default App;

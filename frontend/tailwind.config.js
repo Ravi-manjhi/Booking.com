@@ -2,9 +2,10 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {
-      container: {
-        padding: { md: "7rem", sm: "1rem" },
+    extend: {},
+    container: {
+      padding: {
+        md: "10rem",
       },
     },
   },
